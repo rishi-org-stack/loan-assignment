@@ -1,0 +1,39 @@
+version: '3.4'
+services:
+  # db:
+  #   image: 'bitnami/mongodb:4.2.6'
+  #   restart: always
+    # environment:
+    #   - MONGODB_DATABASE=itsaboutyou
+    #   - MONGODB_USERNAME=rishijha1709
+    #   - MONGODB_PASSWORD=rishijha1709
+    #   - MONGODB_ROOT_PASSWORD=rishijha1709
+    # volumes:
+    #   - "db-data:/bitnami/mongodb"
+    # ports:
+    #   - "27017:27017"
+    # networks:
+    #   - rishi-network
+  mongo:
+    image: mongo:4.0.20-xenial
+    container_name: mongodb_for_loan
+    restart: always
+    ports:
+      - "27017:27017"
+      
+  app:
+    # image: "rishi/itsaboutyou:1.0"\
+    build: .
+    environment:
+      - MONGO_URI=mongo
+      - ENV=dev
+    depends_on:
+      - mongo
+    ports:
+      - "8000:8000"   
+  
+# volumes:
+#   db-data:
+#     driver: local
+# networks:
+#   rishi-network:
